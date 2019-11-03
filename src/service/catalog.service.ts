@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Observable, Subject, Subscription} from 'rxjs';
 import {Product} from '../domain/product';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 
 @Injectable({
@@ -20,13 +20,18 @@ export class CatalogService {
 
   getProduct(id: number): Observable<Product[]> {
     return this.http
-      .get<Product[]>('http://localhost:8081/product/' + id)
+      .get<Product[]>('http://localhost:8080/product/' + id)
       .pipe( map(httpResponse => httpResponse));
   }
 
-  getProductList() {
+  getProductList(): Observable<Product[]> {
     return this.http
-      .get<Product[]>('http://localhost:8081/products')
+      .get<Product[]>('http://localhost:8080/products')
       .pipe( map( httpResponse => httpResponse));
+  }
+
+  deleteProductList(idList: number[]) {
+    this.http
+      .delete('http://localhost:8080/products/' + idList).subscribe();
   }
 }

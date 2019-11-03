@@ -11,7 +11,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {CatalogService} from '../service/catalog.service';
 import {RouterModule, Routes} from '@angular/router';
-import {MatInputModule, MatPaginatorModule, MatSortModule, MatTableModule} from '@angular/material';
+import {MatButtonModule, MatCheckboxModule, MatInputModule, MatPaginatorModule, MatSortModule, MatTableModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
@@ -42,7 +42,9 @@ const appRoutes: Routes = [
     MatSortModule,
     MatInputModule,
     RouterModule.forRoot(appRoutes),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatCheckboxModule,
+    MatButtonModule
   ],
   providers: [CatalogService],
   bootstrap: [AppComponent]

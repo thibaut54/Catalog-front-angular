@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {Subject} from 'rxjs';
 import {Product} from '../../domain/product';
+import {SelectionModel} from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-catalog',
@@ -14,10 +15,13 @@ export class CatalogComponent implements AfterViewInit {
 
   productSubject = new Subject< Product[] >();
   product: Product[] = [];
+  selectedProductId: number[] = [];
   dataSource: MatTableDataSource<Product>;
-  displayedColumns: string[] = ['id', 'label', 'description', 'price', 'vatRate'];
-  motCle = '';
+  displayedColumns: string[] = ['select', 'id', 'label', 'description', 'price', 'vatRate'];
   currentPage = 0;
+  selection = new SelectionModel<Product>(true, []);
+  data = Object.assign( this.product );
+  motCle = '';
   length = 5;
   pages: Array<number>;
 
@@ -54,7 +58,6 @@ export class CatalogComponent implements AfterViewInit {
       } );
   }
 
-
   chercher() {
     this.doSearch();
   }
@@ -74,4 +77,29 @@ export class CatalogComponent implements AfterViewInit {
     this.router.navigate(['editContact', id]);
   }
 
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  removeSelectedRows() {
+    this.selection.selected.forEach(item => {
+      // const index: number = this.data.findIndex(d => d === item);
+      // console.log(this.data.findIndex(d => d === item));
+      // this.data.splice(index, 1);
+      // this.dataSource = new MatTableDataSource<Product>(this.data);
+      this.selectedProductId.push(item.id);
+    });
+    this.catalogService.deleteProductList(this.selectedProductId);
+    // this.selection = new SelectionModel<Product>(true, []);
+    this.selection.clear();
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => this.selection.select(row));
+  }
 }
