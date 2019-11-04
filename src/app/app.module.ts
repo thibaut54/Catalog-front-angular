@@ -11,8 +11,17 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {CatalogService} from '../service/catalog.service';
 import {RouterModule, Routes} from '@angular/router';
-import {MatButtonModule, MatCheckboxModule, MatInputModule, MatPaginatorModule, MatSortModule, MatTableModule} from '@angular/material';
+import {
+  MatButtonModule,
+  MatCheckboxModule,
+  MatDialogModule,
+  MatInputModule,
+  MatPaginatorModule,
+  MatSortModule,
+  MatTableModule
+} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 
 const appRoutes: Routes = [
@@ -30,7 +39,8 @@ const appRoutes: Routes = [
     SigninComponent,
     CatalogComponent,
     ProductDetailComponent,
-    HeaderComponent
+    HeaderComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -44,9 +54,11 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     BrowserAnimationsModule,
     MatCheckboxModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule
   ],
   providers: [CatalogService],
+  entryComponents: [ConfirmDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

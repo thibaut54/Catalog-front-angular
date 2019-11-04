@@ -34,4 +34,15 @@ export class CatalogService {
     this.http
       .delete('http://localhost:8080/products/' + idList).subscribe();
   }
+
+  deleteProductListWithBody(idListBody: number[]) {
+    const idList = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      body: idListBody
+    };
+    this.http
+      .delete('http://localhost:8080/products', idList).subscribe();
+  }
 }
